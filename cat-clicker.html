@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cat Clicker</title>
+  <style type="text/css">
+    img {
+      max-width: 100%;
+    }
+
+    #cats-wrapper {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    #cats-wrapper li {
+      float: left;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    #cats-wrapper::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+  </style>
+</head>
+<body>
+
+  <ul id="cats-wrapper">
+    <!-- // TODO: Create dynamic li's and images inside and fill it from Array cats --> 
+  </ul>
+
+  <script>
+    var wrapper = document.getElementById('cats-wrapper');
+    
+    var cats = [
+      {   
+        name: 'Andy', 
+        image: 'http://placekitten.com.s3.amazonaws.com/homepage-samples/408/287.jpg'
+      }, 
+      { 
+        name: 'John', 
+        image: 'http://placekitten.com.s3.amazonaws.com/homepage-samples/408/287.jpg'
+      },
+      {   
+        name: 'Jacek', 
+        image: 'https://lh5.ggpht.com/LfjkdmOKkGLvCt-VuRlWGjAjXqTBrPjRsokTNKBtCh8IFPRetGaXIpTQGE2e7ZCUaG2azKNkz38KkbM_emA=s0#w=640&h=454'
+      }
+    ];
+
+    // Generate list with all names as options and values as index of list
+    // on change run generateCat with propper index
+
+    function generateList() {
+      var list = document.createElement('select');
+      var body = document.querySelector('body');
+
+      list.addEventListener('change', function(event) {
+        generateCat(event.target.value);
+      });
+
+      for (var i = 0; i < cats.length; i++) {
+        var option = document.createElement('option');
+        option.setAttribute('value', i);
+        option.innerHTML = cats[i].name;
+
+        list.appendChild(option);
+      }
+
+      body.insertBefore(list, wrapper);
+    }
+
+    generateList();
+
+    function generateCat(index) {
+
+      wrapper.innerHTML = '';
+
+      var li = document.createElement('li');
+      var catName = document.createElement('h2');
+      var catImage = document.createElement('img');
+      var counter = document.createElement('p');
+
+      catName.innerHTML = cats[index].name;
+
+      catImage.setAttribute('src', cats[index].image);
+      catImage.setAttribute('alt', cats[index].name);
+
+      catImage.addEventListener('click', function(el) {
+          el.currentTarget.nextSibling.textContent++;
+      });
+
+      wrapper.appendChild(li);
+
+      li.appendChild(catName);
+      li.appendChild(catImage);
+      li.appendChild(counter);
+    }
+
+    // choose index from array to generate only one cat
+    generateCat(0);
+
+  </script>
+</body>
+</html>
